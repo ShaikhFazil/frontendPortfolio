@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Dark-locked palette, carried over from the original portfolio's violet brand
+  but re-balanced onto cool neutrals. One accent (violet), used page-wide.
+  Radius system: panels 16px, controls 12px, pills full.
+*/
+@layer base {
+  :root {
+    --background: 240 24% 4%; /* #07070c */
+    --surface: 240 18% 8%; /* #10101a */
+    --surface-2: 240 16% 11%; /* #171724 */
+    --foreground: 240 14% 96%;
+    --muted: 240 16% 11%;
+    --muted-foreground: 240 9% 64%;
+    --card: 240 18% 8%;
+    --card-foreground: 240 14% 96%;
+    --popover: 240 18% 8%;
+    --popover-foreground: 240 14% 96%;
+
+    --primary: 258 90% 68%; /* violet #8b5cf6-ish */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 288 80% 60%; /* fuchsia, gradient partner only */
+    --secondary-foreground: 0 0% 100%;
+    --accent: 258 90% 68%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 56%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 152 60% 46%;
+    --warning: 38 92% 58%;
+
+    --border: 240 14% 18%;
+    --input: 240 14% 16%;
+    --ring: 258 90% 68%;
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply scroll-smooth antialiased;
+    scroll-padding-top: 5.5rem;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(60rem 40rem at 78% -10%, hsl(258 90% 68% / 0.12), transparent 60%),
+      radial-gradient(45rem 35rem at 5% 18%, hsl(288 80% 60% / 0.07), transparent 60%);
+    background-attachment: fixed;
+  }
+  ::selection {
+    background: hsl(var(--primary) / 0.35);
+  }
+  /* Visible, consistent keyboard focus everywhere */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-[1200px] px-5 sm:px-8;
+  }
+  .text-gradient {
+    @apply bg-gradient-to-r from-[hsl(258_90%_72%)] via-[hsl(275_85%_70%)] to-[hsl(300_80%_68%)] bg-clip-text text-transparent;
+  }
+  .panel {
+    @apply rounded-2xl border border-border bg-[hsl(var(--surface))];
+  }
+  .panel-hover {
+    @apply transition-colors duration-300 hover:border-primary/40 hover:bg-[hsl(var(--surface-2))];
+  }
+  .hairline {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-border to-transparent;
+  }
+  /* Grid texture used behind the hero and contact panels */
+  .grid-texture {
+    background-image:
+      linear-gradient(to right, hsl(240 14% 30% / 0.18) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(240 14% 30% / 0.18) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 78%);
+  }
+}
+
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Any motion beyond a hover transition collapses under reduced-motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
